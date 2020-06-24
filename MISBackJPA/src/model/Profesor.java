@@ -1,11 +1,14 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -19,21 +22,16 @@ public class Profesor implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonProperty
 	private int idProfesor;
 	
-	@JsonProperty
 	private String ime;
 	
-	@JsonProperty
 	private String jmbg;
 	
-	@JsonProperty
 	private String prezime;
 
 	//bi-directional many-to-one association to Predmet
 	@OneToMany(mappedBy="profesor")
-	@JsonProperty
 	private List<Predmet> predmets;
 
 	public Profesor() {

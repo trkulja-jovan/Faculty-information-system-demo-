@@ -1,12 +1,18 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -20,38 +26,23 @@ public class Ispit implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonProperty
 	private int idIspit;
 
-	@Column(name="br_bodova")
-	@JsonProperty
-	private double brBodova;
-
-	@Temporal(TemporalType.DATE)
-	@JsonProperty
-	private Date datum;
+	private int ocena;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonProperty
 	private Date datumPolaganja;
-
-	@Column(name="ukupno_bodova")
-	@JsonProperty
-	private double ukupnoBodova;
 
 	//bi-directional many-to-one association to Predmet
 	@ManyToOne
-	@JsonProperty
 	private Predmet predmet;
 
 	//bi-directional many-to-one association to Student
 	@ManyToOne
-	@JsonProperty
 	private Student student;
 
 	//bi-directional many-to-one association to Prijava
 	@OneToMany(mappedBy="ispit")
-	@JsonProperty
 	private List<Prijava> prijavas;
 
 	public Ispit() {
@@ -66,19 +57,7 @@ public class Ispit implements Serializable {
 	}
 
 	public double getBrBodova() {
-		return this.brBodova;
-	}
-
-	public void setBrBodova(double brBodova) {
-		this.brBodova = brBodova;
-	}
-
-	public Date getDatum() {
-		return this.datum;
-	}
-
-	public void setDatum(Date datum) {
-		this.datum = datum;
+		return this.ocena;
 	}
 
 	public Date getDatumPolaganja() {
@@ -89,12 +68,12 @@ public class Ispit implements Serializable {
 		this.datumPolaganja = datumPolaganja;
 	}
 
-	public double getUkupnoBodova() {
-		return this.ukupnoBodova;
+	public int getOcena() {
+		return this.ocena;
 	}
 
-	public void setUkupnoBodova(double ukupnoBodova) {
-		this.ukupnoBodova = ukupnoBodova;
+	public void setOcena(int ocena) {
+		this.ocena = ocena;
 	}
 
 	public Predmet getPredmet() {

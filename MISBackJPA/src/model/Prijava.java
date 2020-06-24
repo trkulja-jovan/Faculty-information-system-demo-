@@ -1,9 +1,13 @@
 package model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -17,20 +21,14 @@ public class Prijava implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonProperty
 	private int idPrijava;
-	
-	@JsonProperty
-	private String ispitniRok;
 
 	//bi-directional many-to-one association to Ispit
 	@ManyToOne
-	@JsonProperty
 	private Ispit ispit;
 
 	//bi-directional many-to-one association to Student
 	@ManyToOne
-	@JsonProperty
 	private Student student;
 
 	public Prijava() {
@@ -42,14 +40,6 @@ public class Prijava implements Serializable {
 
 	public void setIdPrijava(int idPrijava) {
 		this.idPrijava = idPrijava;
-	}
-
-	public String getIspitniRok() {
-		return this.ispitniRok;
-	}
-
-	public void setIspitniRok(String ispitniRok) {
-		this.ispitniRok = ispitniRok;
 	}
 
 	public Ispit getIspit() {
