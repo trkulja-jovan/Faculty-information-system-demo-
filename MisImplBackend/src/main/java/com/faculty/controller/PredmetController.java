@@ -27,6 +27,7 @@ public class PredmetController {
 	
 	@RequestMapping(path = "/getPredmets", produces="application/json")
 	public ResponseEntity<List<JSONPredProf>> getPredmetForStud(@RequestParam("idStudent") Integer idStudent){
+		
 		return ps.getPredmetForStud(idStudent);
 	}
 	

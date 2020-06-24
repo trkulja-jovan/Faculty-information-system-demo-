@@ -3,16 +3,13 @@ package com.faculty.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.faculty.json_entities.JSONStudent;
 import com.faculty.repository.StudentRepository;
 
-import model.Student;
-
 @Service
-public class StudentService {
+public class StudentService implements AbstractService {
 	
 	private StudentRepository sr;
 	
@@ -25,17 +22,10 @@ public class StudentService {
 		
 		var student = sr.findById(idStudent).get();
 		assert student != null;
-		return new ResponseEntity<JSONStudent>(parseEntityToJson(student), HttpStatus.OK);
+		return new ResponseEntity<JSONStudent>(parseStudentToJson(student), HttpStatus.OK);
 		
 	}
 	
-	private JSONStudent parseEntityToJson(@NonNull Student student) {
-		return new JSONStudent(student.getIdOsoba(),
-							   student.getBrIndeksa(), 
-							   student.getGodinaStudija(),
-							   student.getIme(), 
-							   student.getJmbg(), 
-							   student.getPrezime());
-	}
+	
 
 }
