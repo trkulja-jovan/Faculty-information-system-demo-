@@ -10,7 +10,14 @@ import com.faculty.repository.IspitRepository;
 import model.Ispit;
 
 @Service
-public record IspitService(@Autowired IspitRepository ir) {
+public class IspitService{
+	
+	private IspitRepository ir;
+	
+	public IspitService(@Autowired IspitRepository ir) {
+		if(ir != null)
+			this.ir = ir;
+	}
 	
 	public ResponseEntity<Ispit> saveIs(Ispit ispit){
 		

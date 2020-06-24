@@ -10,21 +10,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faculty.json_entities.JSONPredProf;
+import com.faculty.json_entities.JSONPredmet;
+import com.faculty.json_entities.JSONProfesor;
 import com.faculty.services.PredmetService;
 
-import model.Predmet;
-import model.Profesor;
-
 @RestController
-public record PredmetController(@Autowired PredmetService sr) {
+public class PredmetController {
 	
-	@RequestMapping("/getPredmets")
-	public ResponseEntity<List<Predmet>> getPredmetForStud(@RequestParam("idStudent") Integer idStudent){
-		return sr.getPredmetForStud(idStudent);
+	private PredmetService ps;
+	
+	public PredmetController(@Autowired PredmetService ps) {
+		if(ps != null)
+			this.ps = ps;
+	}
+	
+	@RequestMapping(path = "/getPredmets", produces="application/json")
+	public ResponseEntity<List<JSONPredProf>> getPredmetForStud(@RequestParam("idStudent") Integer idStudent){
+		return ps.getPredmetForStud(idStudent);
 	}
 	
 	@PostMapping("/getPredmetsForProfesor")
-	public ResponseEntity<List<Predmet>> getPredmetForPro(@RequestBody Profesor profesor){
-		return sr.getPredmetForProf(profesor);
+	public ResponseEntity<List<JSONPredmet>> getPredmetForPro(@RequestBody JSONProfesor profesor){
+		return ps.getPredmetForProf(profesor);
 	}
 }

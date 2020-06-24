@@ -12,7 +12,14 @@ import com.faculty.repository.PrijavaRepository;
 import model.Prijava;
 
 @Service
-public record PrijavaService(@Autowired PrijavaRepository pr) {
+public class PrijavaService {
+	
+	private PrijavaRepository pr;
+	
+	public PrijavaService(@Autowired PrijavaRepository pr) {
+		if(pr != null)
+			this.pr = pr;
+	}
 	
 	public ResponseEntity<Prijava> savePrijavaIspit(Prijava p){
 		
