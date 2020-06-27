@@ -23,8 +23,6 @@ public class IspitController {
 	@RequestMapping(path="/prijaviIspit", produces="application/json")
 	public ResponseEntity<Boolean> saveIspit(@RequestParam("idStudent") Integer idStudent,
 											 @RequestParam("idPredmet") Integer idPredmet){
-		
-		System.err.println(idStudent + " | " + idPredmet);
 		return is.savePrijava(idStudent, idPredmet);
 	}
 	
