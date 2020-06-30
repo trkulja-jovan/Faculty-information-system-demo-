@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.faculty.json_entities.JSONPredProf;
-import com.faculty.json_entities.JSONPredmet;
-import com.faculty.json_entities.JSONProfesor;
 import com.faculty.repository.PredmetRepository;
 
 @Service
@@ -27,15 +25,6 @@ public class PredmetService implements AbstractService {
 				     .collect(Collectors.toList());
 		return new ResponseEntity<List<JSONPredProf>>(list, OK);
 	}
-	
-	public ResponseEntity<List<JSONPredmet>> getPredmetForProf(JSONProfesor profesor){
-		var list = pr.findByProfesor(parseJSONToEntity(profesor))
-				     .stream()
-				     .map(x -> parsePredmetToJSON(x))
-				     .collect(Collectors.toList());
-		return new ResponseEntity<List<JSONPredmet>>(list, OK);
-	} 
-	
 	
 	
 }

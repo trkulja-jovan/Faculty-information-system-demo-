@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import model.Predmet;
-import model.Profesor;
 
 @Repository
 public interface PredmetRepository extends JpaRepository<Predmet, Integer>{
@@ -16,6 +15,7 @@ public interface PredmetRepository extends JpaRepository<Predmet, Integer>{
 	@Query("select p from Predmet p inner join p.students s where s.idOsoba like :idStudent")
 	public List<Predmet> findStudents(@Param("idStudent") Integer idStudent);
 	
-	public List<Predmet> findByProfesor(Profesor profesor);
+	@Query("select p from Predmet p where p.profesor.idProfesor like :idProfesor")
+	public List<Predmet> findByProfesor(@Param("idProfesor") Integer idProfesor);
 
 }

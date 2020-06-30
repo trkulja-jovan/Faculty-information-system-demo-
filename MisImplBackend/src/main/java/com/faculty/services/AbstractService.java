@@ -35,19 +35,19 @@ public interface AbstractService {
 	}
 	
 	default JSONIspit parseIspitToJson(Ispit i) {
-		return new JSONIspit(i.getIdIspit(), 
-						     i.getOcena(), 
-						     i.getPredmet().getNazivPredmeta(),
-						     i.getDatumPolaganja().toString());
+		return new JSONIspit(i.getOcena(),
+						     i.getDatumPolaganja().toString(),
+						     parsePredmetToJSON(i.getPredmet()),
+						     parseStudentToJson(i.getStudent()));
 	}
 
 	default Profesor parseJSONToEntity(JSONProfesor prof) {
 		return _mapper.convertValue(prof, Profesor.class);
 	}
 	
-//	default Ispit parseJsonToIspit(JSONIspit i) {
-//		return _mapper.convertValue(i, Ispit.class);
-//	}
+	default Ispit parseJsonToIspit(JSONIspit i) {
+		return _mapper.convertValue(i, Ispit.class);
+	}
 	
 	default Predmet parseJsonToPredmet(JSONPredmet pred) {
 		return _mapper.convertValue(pred, Predmet.class);
@@ -55,6 +55,10 @@ public interface AbstractService {
 	
 	default Student parseJsonToStudent(JSONStudent s) {
 		return _mapper.convertValue(s, Student.class);
+	}
+	
+	default Ispit parseString(String ispit) throws Exception {
+		return _mapper.readValue(ispit, Ispit.class);
 	}
 
 	
