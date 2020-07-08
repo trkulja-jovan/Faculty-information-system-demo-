@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,17 +22,17 @@ public class ProfesorController {
 		this.ps = ps;
 	}
 	
-	@GetMapping(path = "/getAllProfesors", produces = "application/json")
+	@GetMapping("/getAllProfesors")
 	public ResponseEntity<List<JSONProfesor>> returnProfesors(){
 		return ps.getProfesors();
 	}
 	
-	@RequestMapping("/getPredmeti")
+	@GetMapping("/getPredmeti")
 	public ResponseEntity<List<JSONPredmet>> returnPredmets(@RequestParam("idProfesor") Integer idProfesor){
 		return ps.getPredmets(idProfesor);
 	}
 	
-	@RequestMapping("/getStudents")
+	@GetMapping("/getStudents")
 	public ResponseEntity<List<JSONStudent>> returnStudents(@RequestParam("idPredmet") Integer idPredmet){
 		return ps.getStudents(idPredmet);
 	}

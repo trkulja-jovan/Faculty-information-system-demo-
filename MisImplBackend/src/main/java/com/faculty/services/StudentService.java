@@ -25,7 +25,5 @@ public class StudentService implements AbstractService {
 		return new ResponseEntity<JSONStudent>(parseStudentToJson(student), HttpStatus.OK);
 		
 	}
-	
-	
 
 }

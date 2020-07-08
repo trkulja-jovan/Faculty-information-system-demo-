@@ -2,7 +2,7 @@ package com.faculty.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +19,7 @@ public class StudentController {
 			this.ss = ss;
 	}
 	
-	@RequestMapping(path = "/getStudentInfo", produces = "application/json")
+	@GetMapping("/getStudentInfo")
 	public ResponseEntity<JSONStudent> getStudent(@RequestParam("idStudent") Integer idStudent){
 		return ss.findStudent(idStudent);
 	}
