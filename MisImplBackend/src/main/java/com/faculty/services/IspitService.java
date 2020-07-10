@@ -8,11 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.faculty.i_service.BaseService;
+import com.faculty.i_service.IServiceIspit;
 import com.faculty.json_entities.JSONIspit;
 import com.faculty.repository.IspitRepository;
 
 @Service
-public class IspitService implements AbstractService {
+public class IspitService implements IServiceIspit<JSONIspit>, BaseService {
 
 	private IspitRepository ir;
 
@@ -21,20 +23,22 @@ public class IspitService implements AbstractService {
 		this.ir = ir;
 	}
 	
-	public ResponseEntity<Boolean> savePrijava(String i) {
+	@Override
+	public ResponseEntity<JSONIspit> savePrijava(String i) {
 
 		try {
 			
-			var ispit = parseString(i);
+			var ispit = parseStringToIspit(i);
 			ir.save(ispit);
 
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+			return new ResponseEntity<JSONIspit>(parseIspitToJson(ispit), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
+	@Override
 	public ResponseEntity<List<JSONIspit>> getPrijavljeniIspiti(Integer idStudent) {
 
 		var lista = ir.findAllPrijavljeni(idStudent)
@@ -43,7 +47,8 @@ public class IspitService implements AbstractService {
 
 		return new ResponseEntity<List<JSONIspit>>(lista, HttpStatus.OK);
 	}
-
+	
+	@Override
 	public ResponseEntity<List<JSONIspit>> getStatusIspits(Integer idStudent) {
 
 		var lista = ir.findAllPolozeni(idStudent)

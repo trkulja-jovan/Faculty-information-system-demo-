@@ -1,16 +1,17 @@
 package com.faculty.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faculty.i_controller.IStudent;
 import com.faculty.json_entities.JSONStudent;
 import com.faculty.services.StudentService;
 
 @RestController
-public class StudentController {
+public class StudentController implements IStudent<JSONStudent>{
 	
 	private StudentService ss;
 	
@@ -19,9 +20,14 @@ public class StudentController {
 			this.ss = ss;
 	}
 	
-	@GetMapping("/getStudentInfo")
-	public ResponseEntity<JSONStudent> getStudent(@RequestParam("idStudent") Integer idStudent){
+	@Override
+	public ResponseEntity<JSONStudent> getStudent(Integer idStudent){
 		return ss.findStudent(idStudent);
+	}
+	
+	@Override
+	public ResponseEntity<List<JSONStudent>> returnStudents(Integer idPredmet){
+		return ss.getStudents(idPredmet);
 	}
 
 }

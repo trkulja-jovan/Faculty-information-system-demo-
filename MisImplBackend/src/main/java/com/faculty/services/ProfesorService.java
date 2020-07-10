@@ -8,28 +8,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.faculty.json_entities.JSONPredmet;
+import com.faculty.i_service.BaseService;
+import com.faculty.i_service.IServiceProfesor;
 import com.faculty.json_entities.JSONProfesor;
-import com.faculty.json_entities.JSONStudent;
-import com.faculty.repository.PredmetRepository;
 import com.faculty.repository.ProfesorRepository;
-import com.faculty.repository.StudentRepository;
 
 @Service
-public class ProfesorService implements AbstractService{
+public class ProfesorService implements IServiceProfesor<JSONProfesor>, BaseService{
 	
 	private ProfesorRepository pr;
-	private PredmetRepository prer;
-	private StudentRepository sr;
 	
-	public ProfesorService(@Autowired ProfesorRepository pr, 
-			               @Autowired PredmetRepository prer,
-			               @Autowired StudentRepository sr) {
+	public ProfesorService(@Autowired ProfesorRepository pr) {
 		this.pr = pr;
-		this.prer = prer;
-		this.sr = sr;
 	}
 	
+	@Override
 	public ResponseEntity<List<JSONProfesor>> getProfesors(){
 		
 		var list = pr.findAll()
@@ -40,24 +33,5 @@ public class ProfesorService implements AbstractService{
 		return new ResponseEntity<List<JSONProfesor>>(list, HttpStatus.OK);
 	}
 	
-	public ResponseEntity<List<JSONPredmet>> getPredmets(Integer idProfesor){
-		
-		var list = prer.findByProfesor(idProfesor)
-				       .stream()
-				       .map(x -> parsePredmetToJSON(x))
-				       .collect(Collectors.toList());
-		
-		return new ResponseEntity<List<JSONPredmet>>(list, HttpStatus.OK);
-	}
-	
-	public ResponseEntity<List<JSONStudent>> getStudents(Integer idPredmet){
-		
-		var list = sr.findAllStudentsForPredmet(idPredmet)
-				     .stream()
-				     .map(x -> parseStudentToJson(x))
-				     .collect(Collectors.toList());
-		
-		return new ResponseEntity<List<JSONStudent>>(list, HttpStatus.OK);
-	}
 
 }

@@ -4,17 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.faculty.i_controller.IIspit;
 import com.faculty.json_entities.JSONIspit;
 import com.faculty.services.IspitService;
 
 @RestController
-public class IspitController {
+public class IspitController implements IIspit<JSONIspit>{
 
 	private IspitService is;
 
@@ -22,18 +19,18 @@ public class IspitController {
 		this.is = is;
 	}
 	
-	@PostMapping(path = "/prijaviIspit", produces = "application/json")
-	public ResponseEntity<Boolean> saveIspit(@RequestBody String ispit) {
+	@Override
+	public ResponseEntity<JSONIspit> saveIspit(String ispit) {
 		return is.savePrijava(ispit);
 	}
 
-	@GetMapping("/getPrijavljeniIspiti")
-	public ResponseEntity<List<JSONIspit>> getPrijavljeni(@RequestParam("idStudent") Integer idStudent) {
+	@Override
+	public ResponseEntity<List<JSONIspit>> getPrijavljeni(Integer idStudent) {
 		return is.getPrijavljeniIspiti(idStudent);
 	}
 
-	@GetMapping("/getPolozeni")
-	public ResponseEntity<List<JSONIspit>> getStatusIspita(@RequestParam("idStudent") Integer idStudent) {
+	@Override
+	public ResponseEntity<List<JSONIspit>> getStatusIspita(Integer idStudent) {
 		return is.getStatusIspits(idStudent);
 	}
 

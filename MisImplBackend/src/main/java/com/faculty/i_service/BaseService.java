@@ -1,4 +1,4 @@
-package com.faculty.services;
+package com.faculty.i_service;
 
 import com.faculty.json_entities.JSONIspit;
 import com.faculty.json_entities.JSONPredProf;
@@ -12,7 +12,7 @@ import model.Predmet;
 import model.Profesor;
 import model.Student;
 
-public interface AbstractService {
+public interface BaseService {
 
 	final ObjectMapper _mapper = new ObjectMapper();
 
@@ -57,10 +57,7 @@ public interface AbstractService {
 		return _mapper.convertValue(s, Student.class);
 	}
 	
-	default Ispit parseString(String ispit) throws Exception {
+	default Ispit parseStringToIspit(String ispit) throws Exception {
 		return _mapper.readValue(ispit, Ispit.class);
 	}
-
-	
-
 }
