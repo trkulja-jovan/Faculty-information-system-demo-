@@ -14,7 +14,7 @@ import com.faculty.json_entities.JSONIspit;
 import com.faculty.repository.IspitRepository;
 
 @Service
-public class IspitService implements IServiceIspit<JSONIspit>, BaseService {
+public class IspitService extends BaseService implements IServiceIspit<JSONIspit> {
 
 	private IspitRepository ir;
 
@@ -31,7 +31,7 @@ public class IspitService implements IServiceIspit<JSONIspit>, BaseService {
 			var ispit = parseStringToIspit(i);
 			ir.save(ispit);
 
-			return new ResponseEntity<JSONIspit>(parseIspitToJson(ispit), HttpStatus.OK);
+			return new ResponseEntity<JSONIspit>((JSONIspit)parseEntityToJson(ispit, false), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -42,7 +42,8 @@ public class IspitService implements IServiceIspit<JSONIspit>, BaseService {
 	public ResponseEntity<List<JSONIspit>> getPrijavljeniIspiti(Integer idStudent) {
 
 		var lista = ir.findAllPrijavljeni(idStudent)
-				      .stream().map(x -> parseIspitToJson(x))
+				      .stream()
+				      .map(x -> (JSONIspit)parseEntityToJson(x, false))
 				      .collect(Collectors.toList());
 
 		return new ResponseEntity<List<JSONIspit>>(lista, HttpStatus.OK);
@@ -53,7 +54,7 @@ public class IspitService implements IServiceIspit<JSONIspit>, BaseService {
 
 		var lista = ir.findAllPolozeni(idStudent)
 				      .stream()
-				      .map(x -> parseIspitToJson(x))
+				      .map(x -> (JSONIspit)parseEntityToJson(x, false))
 				      .collect(Collectors.toList());
 
 		return new ResponseEntity<List<JSONIspit>>(lista, HttpStatus.OK);

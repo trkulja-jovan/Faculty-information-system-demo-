@@ -14,7 +14,7 @@ import com.faculty.json_entities.JSONProfesor;
 import com.faculty.repository.ProfesorRepository;
 
 @Service
-public class ProfesorService implements IServiceProfesor<JSONProfesor>, BaseService{
+public class ProfesorService extends BaseService implements IServiceProfesor<JSONProfesor>{
 	
 	private ProfesorRepository pr;
 	
@@ -27,7 +27,7 @@ public class ProfesorService implements IServiceProfesor<JSONProfesor>, BaseServ
 		
 		var list = pr.findAll()
 				     .stream()
-				     .map(x -> parseProfesorToJSON(x))
+				     .map(x -> (JSONProfesor)parseEntityToJson(x, false))
 				     .collect(Collectors.toList());
 		
 		return new ResponseEntity<List<JSONProfesor>>(list, HttpStatus.OK);

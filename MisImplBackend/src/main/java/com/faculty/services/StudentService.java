@@ -14,7 +14,7 @@ import com.faculty.json_entities.JSONStudent;
 import com.faculty.repository.StudentRepository;
 
 @Service
-public class StudentService implements IServiceStudent<JSONStudent>, BaseService {
+public class StudentService extends BaseService implements IServiceStudent<JSONStudent> {
 	
 	private StudentRepository sr;
 	
@@ -28,7 +28,7 @@ public class StudentService implements IServiceStudent<JSONStudent>, BaseService
 		
 		var student = sr.findById(idStudent).get();
 		assert student != null;
-		return new ResponseEntity<JSONStudent>(parseStudentToJson(student), HttpStatus.OK);
+		return new ResponseEntity<JSONStudent>((JSONStudent)parseEntityToJson(student, false), HttpStatus.OK);
 		
 	}
 	
@@ -37,7 +37,7 @@ public class StudentService implements IServiceStudent<JSONStudent>, BaseService
 		
 		var list = sr.findAllStudentsForPredmet(idPredmet)
 				     .stream()
-				     .map(x -> parseStudentToJson(x))
+				     .map(x -> (JSONStudent)parseEntityToJson(x, false))
 				     .collect(Collectors.toList());
 		
 		return new ResponseEntity<List<JSONStudent>>(list, HttpStatus.OK);

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record JSONPredmet(@JsonProperty int idPredmet,
 						  @JsonProperty int espb,
 						  @JsonProperty String nazivPredmeta,
-						  @JsonProperty int semestar){
+						  @JsonProperty int semestar) implements JsonEntity{
 
 }
 

@@ -17,7 +17,7 @@ import com.faculty.json_entities.JSONPredmet;
 import com.faculty.repository.PredmetRepository;
 
 @Service
-public class PredmetService implements IServicePredmet<JSONPredmet, JSONPredProf>, BaseService {
+public class PredmetService extends BaseService implements IServicePredmet<JSONPredmet, JSONPredProf> {
 	
 	private PredmetRepository pr;
 	
@@ -29,7 +29,7 @@ public class PredmetService implements IServicePredmet<JSONPredmet, JSONPredProf
 	public ResponseEntity<List<JSONPredProf>> getPredmetForStud(Integer idStudent){
 		var list = pr.findStudents(idStudent)
 				     .stream()
-				     .map(x -> parseEntityToJSONPredProf(x))
+				     .map(x -> (JSONPredProf)parseEntityToJson(x, true))
 				     .collect(Collectors.toList());
 		return new ResponseEntity<List<JSONPredProf>>(list, OK);
 	}
@@ -39,7 +39,7 @@ public class PredmetService implements IServicePredmet<JSONPredmet, JSONPredProf
 		
 		var list = pr.findByProfesor(idProfesor)
 				       .stream()
-				       .map(x -> parsePredmetToJSON(x))
+				       .map(x -> (JSONPredmet) parseEntityToJson(x, false))
 				       .collect(Collectors.toList());
 		
 		return new ResponseEntity<List<JSONPredmet>>(list, HttpStatus.OK);

@@ -7,6 +7,7 @@ public record JSONStudent(@JsonProperty int idOsoba,
 						  @JsonProperty int godinaStudija,
 						  @JsonProperty String ime,
 						  @JsonProperty String jmbg,
-						  @JsonProperty String prezime) {
+						  @JsonProperty String prezime) implements JsonEntity {
+
 
 }
